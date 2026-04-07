@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick QR Generator</title>
+    <style>
+        /* Simple, clean styling */
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f7f6;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 350px;
+        }
+        input {
+            width: 90%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #e84118;
+        }
+        #qr-result {
+            margin-top: 25px;
+            display: none; /* Hidden until generated */
+        }
+        #qr-result img {
+            border: 1px solid #eee;
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>QR Code Generator</h2>
+    <input type="text" id="qr-input" placeholder="Paste your link here...">
+    <button onclick="generateQR()">Generate QR Code</button>
+
+    <div id="qr-result">
+        <img src="" id="qr-img" alt="QR Code">
+        <p style="font-size: 0.8rem; color: #666;">Right-click to save image</p>
+    </div>
+</div>
+
+<script>
+    function generateQR() {
+        const input = document.getElementById('qr-input').value;
+        const qrResult = document.getElementById('qr-result');
+        const qrImg = document.getElementById('qr-img');
+
+        if (input.trim() === "") {
+            alert("Please enter a link!");
+            return;
+        }
+
+        // We use the GoQR API: simple and requires no setup!
+        const apiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(input)}`;
+
+        qrImg.src = apiUrl;
+        qrResult.style.display = "block";
+    }
+</script>
+
+</body>
+</html>
